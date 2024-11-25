@@ -37,7 +37,6 @@ const Footer = () => {
                             <li><a href='/products' className="hover:text-sky-300">Productos</a></li>
                             <li><a href='/about' className="hover:text-sky-300">Nosotros</a></li>
                             <li><a href='/blog' className="hover:text-sky-300">Blog</a></li>
-                            <li><a href='/settings' className="hover:text-sky-300">Configuración</a></li>
                         </ul>
                     </div>
 

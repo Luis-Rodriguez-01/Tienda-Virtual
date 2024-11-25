@@ -1,7 +1,8 @@
 import React from 'react';
-import { motion } from 'framer-motion';
+import { AnimatePresence, motion } from 'framer-motion';
 import { ShoppingCart } from 'lucide-react';
 import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 
 const products = [
     {
@@ -47,9 +48,19 @@ const products = [
         category: 'Limpieza'
     }
 ];
-
 const Products = () => {
     const { addToCart } = useCart();
+    const { isAuthenticated } = useAuth();
+    const [showLoginMessage, setShowLoginMessage] = React.useState(false);
+
+    const handleAddToCart = (product: any) => {
+        if (!isAuthenticated) {
+            setShowLoginMessage(true);
+            setTimeout(() => setShowLoginMessage(false), 3000);
+            return;
+        }
+        addToCart(product);
+    };
 
     return (
         <div className="max-w-7xl mx-auto px-4 py-8">
@@ -76,11 +87,11 @@ const Products = () => {
                                 <h3 className="text-lg font-semibold text-gray-900">{product.name}</h3>
                                 <span className="text-sky-600 font-bold">${product.price}</span>
                             </div>
-                            <p className="text-sm text-gray-600 mb-4">Categoria: {product.category}</p>
+                            <p className="text-sm text-gray-600 mb-4">Categoría: {product.category}</p>
                             <motion.button
                                 whileHover={{ scale: 1.02 }}
                                 whileTap={{ scale: 0.98 }}
-                                onClick={() => addToCart(product)}
+                                onClick={() => handleAddToCart(product)}
                                 className="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-2"
                             >
                                 <ShoppingCart className="w-4 h-4" />
@@ -90,6 +101,19 @@ const Products = () => {
                     </motion.div>
                 ))}
             </div>
+
+            <AnimatePresence>
+                {showLoginMessage && (
+                    <motion.div
+                        initial={{ opacity: 0, y: 50 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: 50 }}
+                        className="fixed bottom-4 right-4 bg-sky-600 text-white px-6 py-3 rounded-lg shadow-lg"
+                    >
+                        Inicie sesión para agregar artículos a su carrito
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </div>
     );
 };

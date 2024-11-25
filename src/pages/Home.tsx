@@ -59,6 +59,7 @@ const Home = () => {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
+            onClick={() => navigate('/blog')}
             className="px-8 py-3 border-2 border-sky-300 text-sky-300 rounded-full font-semibold hover:bg-sky-300/10 transition-colors"
           >
             Leer Más

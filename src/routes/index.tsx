@@ -4,7 +4,6 @@ import Home from '../pages/Home';
 import About from '../pages/About';
 import Blog from '../pages/Blog';
 import Contact from '../pages/Contact';
-import Settings from '../pages/Settings';
 import Products from '../pages/Products';
 
 const AppRoutes = () => {
@@ -15,7 +14,6 @@ const AppRoutes = () => {
       <Route path="/about" element={<About />} />
       <Route path="/blog" element={<Blog />} />
       <Route path="/contact" element={<Contact />} />
-      <Route path="/settings" element={<Settings />} />
     </Routes>
   );
 };
