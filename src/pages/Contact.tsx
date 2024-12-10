@@ -1,13 +1,19 @@
 import React from 'react';
 import { Mail, Phone, MapPin } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Contact = () => {
   return (
     <div className="max-w-4xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
       <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center pt-4">
         Contáctanos 
       </h1>
-
+      </motion.div>
       <div className="grid md:grid-cols-2 gap-8 mb-12">
         <div>
           <div className="bg-white p-6 rounded-xl shadow-sm mb-8">

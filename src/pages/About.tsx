@@ -1,13 +1,19 @@
 import React from 'react';
 import { Users, Target, Heart } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const About = () => {
   return (
     <div className="max-w-4xl mx-auto">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
       <h1 className="text-4xl font-bold text-gray-900 mb-8 text-center pt-4">
         Sobre Nosotros
       </h1>
-
+      </motion.div>
       <div className="prose lg:prose-xl mb-12">
         <p className="text-gray-600 text-lg leading-relaxed">
           Somos un equipo dedicado de profesionales comprometidos a brindar servicios excepcionales

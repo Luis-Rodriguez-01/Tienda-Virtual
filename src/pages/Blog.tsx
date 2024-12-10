@@ -1,5 +1,6 @@
 import React from 'react';
 import { Calendar, User } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 const Blog = () => {
   const posts = [
@@ -25,7 +26,16 @@ const Blog = () => {
 
   return (
     <div className="max-w-4xl mx-auto">
-      <h1 className="text-4xl font-bold text-gray-900 mb-8 pt-4">Blog</h1>
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <h1 className="text-4xl font-bold text-gray-900 mb-6">Blog</h1>
+        <p className="text-lg text-gray-700 pb-4">
+          Próximamente artículos interesantes...
+        </p>
+      </motion.div>
 
       <div className="grid gap-8">
         {posts.map(post => (
