@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 
@@ -20,23 +19,23 @@ const Footer = () => {
                         <h3 className="text-lg font-semibold mb-4">Enlaces Rápidos</h3>
                         <ul className="space-y-2">
                             <li>
-                                <Link to="/products" className="text-sky-200 hover:text-white transition-colors">
-                                    Productos
+                                <Link to="/mens" className="text-sky-200 hover:text-white transition-colors">
+                                    Moda de Hombre
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/about" className="text-sky-200 hover:text-white transition-colors">
-                                    Acerca de
+                                <Link to="/women" className="text-sky-200 hover:text-white transition-colors">
+                                    Moda de Mujer
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/contact" className="text-sky-200 hover:text-white transition-colors">
-                                    Contacto
+                                <Link to="/herramientas" className="text-sky-200 hover:text-white transition-colors">
+                                    Herramientas
                                 </Link>
                             </li>
                             <li>
-                                <Link to="/blog" className="text-sky-200 hover:text-white transition-colors">
-                                    Blog
+                                <Link to="/tecnologia" className="text-sky-200 hover:text-white transition-colors">
+                                    Tecnología
                                 </Link>
                             </li>
                         </ul>

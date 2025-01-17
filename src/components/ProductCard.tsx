@@ -1,7 +1,9 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Star, TruckIcon } from 'lucide-react';
+import { Heart, Star, TruckIcon, ShoppingCart } from 'lucide-react';
 import { Link } from 'react-router-dom';
+import { useCart } from '../context/CartContext';
+import { useAuth } from '../context/AuthContext';
 
 interface ProductCardProps {
   product: {
@@ -21,9 +23,22 @@ interface ProductCardProps {
 }
 
 const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+  const { addToCart } = useCart();
+  const { isAuthenticated } = useAuth();
+  
   const discount = product.originalPrice 
     ? Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)
     : 0;
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault(); // Prevent navigation when clicking the button
+    addToCart({
+      id: product.id,
+      name: product.name,
+      price: product.price,
+      image: product.image,
+    });
+  };
 
   return (
     <motion.div
@@ -37,7 +52,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
             alt={product.name}
             className="w-full h-64 object-cover object-center group-hover:opacity-75 transition-opacity"
           />
-          <button className="absolute top-3 right-3 p-2 rounded-full bg-white/80 hover:bg-white transition-colors">
+          <button 
+            className="absolute top-3 right-3 p-2 rounded-full bg-white/80 hover:bg-white transition-colors"
+            onClick={(e) => e.preventDefault()}
+          >
             <Heart className="w-5 h-5 text-gray-600" />
           </button>
           {discount > 0 && (
@@ -77,6 +95,14 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
               </div>
             )}
           </div>
+
+          <button
+            onClick={handleAddToCart}
+            className="mt-4 w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-2"
+          >
+            <ShoppingCart className="w-4 h-4" />
+            <span>Añadir al carrito</span>
+          </button>
         </div>
       </Link>
     </motion.div>

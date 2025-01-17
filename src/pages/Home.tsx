@@ -1,8 +1,9 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { Search, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import FeaturedCategories from '../components/FeaturedCategories';
 import ProductCard from '../components/ProductCard';
+import ProductSlider from '../components/ProductSlider';
 
 const featuredProducts = [
   {
@@ -45,7 +46,7 @@ const featuredProducts = [
       name: 'Sports Elite',
       rating: 4.7
     },
-    freeShipping: false
+    freeShipping: true
   },
   {
     id: 4,
@@ -116,9 +117,12 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold text-gray-900">Productos Destacados</h2>
-            <button className="flex items-center text-sky-600 hover:text-sky-700 transition-colors">
+            <Link 
+              to="/products" 
+              className="flex items-center text-sky-600 hover:text-sky-700 transition-colors"
+            >
               Ver todos <ArrowRight className="w-4 h-4 ml-1" />
-            </button>
+            </Link>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -128,6 +132,9 @@ const Home = () => {
           </div>
         </div>
       </div>
+
+      {/* Product Slider */}
+      <ProductSlider />
 
       {/* Flash Sales Banner */}
       <div className="bg-gradient-to-r from-red-600 to-sky-400 py-12 text-white">
@@ -142,5 +149,4 @@ const Home = () => {
     </div>
   );
 };
-
 export default Home;

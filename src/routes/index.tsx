@@ -1,23 +1,26 @@
 import { Routes, Route } from 'react-router-dom';
 import Home from '../pages/Home';
-import Products from '../pages/Products';
-import About from '../pages/About';
-import Contact from '../pages/Contact';
-import Blog from '../pages/Blog';
-import Admin from '../pages/Admin';
-import { useAuth } from '../context/AuthContext';
+import MensFashion from '../pages/MensFashion';
+import WomanFashion from '../pages/WomanFashion';
+import Fashion from '../category/fashion';
+import Herramientas from '../category/Herramientas'
+import Tecnologia from '../pages/Tecnologia'
+import Accessories from '../category/accessories';
+import Regalo from '../category/regalo';
+import AllProducts from '../pages/AllProducts';
 
 const AppRoutes = () => {
-  const { user } = useAuth();
-
   return (
     <Routes>
       <Route path="/" element={<Home />} />
-      <Route path="/products" element={<Products />} />
-      <Route path="/about" element={<About />} />
-      <Route path="/contact" element={<Contact />} />
-      <Route path="/blog" element={<Blog />} />
-      {user?.role === 'admin' && <Route path="/admin" element={<Admin />} />}
+      <Route path="/mens" element={<MensFashion />} />
+      <Route path="/women" element={<WomanFashion />} />
+      <Route path="/herramientas" element={<Herramientas />} />
+      <Route path="/tecnologia" element={<Tecnologia />} />
+      <Route path="/category/accessories" element={<Accessories />}/>
+      <Route path="/category/fashion" element={<Fashion />} />
+      <Route path="/category/gifts" element={<Regalo />} />
+      <Route path="/products" element={<AllProducts />} />
     </Routes>
   );
 };

@@ -1,17 +1,10 @@
-import React, { useState } from 'react';
-import { motion } from 'framer-motion';
+import { useState } from 'react';
 import { Package, Users, Settings, PlusCircle } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
-import { Navigate } from 'react-router-dom';
 
 const Admin = () => {
-    const { user, isAuthenticated } = useAuth();
     const [activeTab, setActiveTab] = useState('products');
-    const [showAddProduct, setShowAddProduct] = useState(false);
+    const [] = useState(false);
 
-    if (!isAuthenticated || user?.role !== 'admin') {
-        return <Navigate to="/" replace />;
-    }
 
     return (
         <div className="min-h-screen bg-gray-50">
@@ -19,7 +12,7 @@ const Admin = () => {
                 <div className="flex justify-between items-center mb-8">
                     <h1 className="text-3xl font-bold text-gray-900">Panel de Administración</h1>
                     <div className="flex items-center gap-4">
-                        <span className="text-gray-600">Bienvenido, {user?.name}</span>
+                        <span className="text-gray-600">Bienvenido, </span>
                     </div>
                 </div>
 
@@ -62,7 +55,7 @@ const Admin = () => {
                                     <div className="flex justify-between items-center mb-6">
                                         <h2 className="text-xl font-semibold">Gestionar Productos</h2>
                                         <button
-                                            onClick={() => setShowAddProduct(true)}
+                                            
                                             className="flex items-center gap-2 bg-sky-600 text-white px-4 py-2 rounded-lg hover:bg-sky-700 transition-colors"
                                         >
                                             <PlusCircle className="w-5 h-5" />

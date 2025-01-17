@@ -1,4 +1,3 @@
-import React from 'react';
 import { motion } from 'framer-motion';
 import { ShoppingBag, Shirt, Home, Watch, Laptop, Gift } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -14,13 +13,13 @@ const categories = [
     name: 'Electrónica',
     icon: Laptop,
     color: 'bg-blue-100 text-blue-600',
-    link: '/category/electronics'
+    link: '/tecnologia'
   },
   {
     name: 'Hogar',
     icon: Home,
     color: 'bg-green-100 text-green-600',
-    link: '/category/home'
+    link: '/herramientas'
   },
   {
     name: 'Accesorios',

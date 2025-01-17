@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { X, Mail, Lock, User, ArrowRight } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
 
 interface AuthModalProps {
     isOpen: boolean;
@@ -14,15 +13,9 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, mode, onClose, onSwitchMo
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
-    const { login, register } = useAuth();
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        if (mode === 'login') {
-            login(email, password);
-        } else {
-            register(name, email, password);
-        }
         onClose();
     };
 
@@ -38,7 +31,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, mode, onClose, onSwitchMo
             y: 0,
             transition: {
                 type: 'spring',
-                duration: 0.5,
+                duration: 0.1,
             },
         },
         exit: {
@@ -46,7 +39,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, mode, onClose, onSwitchMo
             scale: 0.8,
             y: 50,
             transition: {
-                duration: 0.3,
+                duration: 0.1,
             },
         },
     };
@@ -78,7 +71,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, mode, onClose, onSwitchMo
                         exit="exit"
                     >
                         {/* Header */}
-                        <div className="bg-sky-900 text-white p-6">
+                        <div className="bg-gradient-to-r from-red-600 to-sky-400 text-white p-6">
                             <div className="flex justify-between items-center">
                                 <h2 className="text-2xl font-bold">
                                     {mode === 'login' ? 'Welcome Back' : 'Create Account'}
@@ -166,7 +159,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, mode, onClose, onSwitchMo
 
                             <button
                                 type="submit"
-                                className="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-2"
+                                className="w-full bg-gradient-to-r from-red-400 to-sky-300 text-white py-2 px-4 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-2"
                             >
                                 <span>{mode === 'login' ? 'Sign In' : 'Create Account'}</span>
                                 <ArrowRight className="w-4 h-4" />
@@ -192,7 +185,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, mode, onClose, onSwitchMo
                                         onClick={() => onSwitchMode('login')}
                                         className="text-sky-600 hover:text-sky-700 font-medium"
                                     >
-                                            Inicia sesión
+                                            Iniciar sesión
                                     </button>
                                 </p>
                             )}
