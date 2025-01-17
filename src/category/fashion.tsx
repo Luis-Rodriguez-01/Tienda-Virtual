@@ -3,17 +3,17 @@ import { motion } from 'framer-motion';
 import { Filter, Search } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import { allProducts } from '../data/allProducts';
+import { mensProducts } from '../data/mensProducts';
+import { womanProducts } from '../data/womanProducts';
+
+// Combine all products from different categories
 const categories = [
-  "Todos",
-  "Chaquetas",
-  "Pantalones",
-  "Camisas",
-  "Deportiva",
-  "Trajes",
-  "Camisetas",
-  "Abrigos",
-  "Sudaderas"
+  ...mensProducts,
+  ...womanProducts
 ];
+// Get unique categories from all products
+const allCategories = ["Todos", ...new Set(categories.map(product => product.category))];
+
 
 const Fashion = () => {
   const [selectedCategory, setSelectedCategory] = useState("Todos");
