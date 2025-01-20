@@ -22,7 +22,6 @@ const MensFashion = () => {
     };
     fetchCategories();
   }, []);
-  console.log(categories);
 
   const filteredProducts = mensProducts.filter((product) => {
     const matchesCategory = selectedCategory === "Todos" || product.category === selectedCategory;

@@ -1,5 +1,6 @@
 import { useRef, useState, useEffect } from 'react';
 import { ChevronLeft, ChevronRight, Filter } from 'lucide-react';
+import axios from 'axios';
 
 interface ScrollableCategoriesProps {
   categories: string[];
@@ -14,23 +15,28 @@ export const ScrollableCategories = ({ categories, selectedCategory, onSelectCat
 
   const checkScroll = () => {
     if (!scrollContainerRef.current) return;
-
+  
     const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
-    setShowLeftArrow(scrollLeft > 0);
-    setShowRightArrow(scrollLeft < scrollWidth - clientWidth);
+  
+    const canScrollLeft = scrollLeft > 0;
+    const canScrollRight = scrollWidth > clientWidth && scrollLeft < scrollWidth - clientWidth;
+  
+    setShowLeftArrow(canScrollLeft);
+    setShowRightArrow(canScrollRight);
   };
+  
 
   useEffect(() => {
-    checkScroll();
-
-    const handleResize = () => {
-      checkScroll();
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/category/list');
+        const categories = response.data.Categories.map((category: { name: string }) => category.name);
+        categories(["Todos", ...categories]);
+      } catch (error) {
+        console.error("Error al cargar las categorías:", error);
+      }
     };
-
-    window.addEventListener('resize', handleResize);
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    fetchCategories();
   }, [categories]);
 
   const scroll = (direction: 'left' | 'right') => {
@@ -48,7 +54,7 @@ export const ScrollableCategories = ({ categories, selectedCategory, onSelectCat
 
   return (
     <div className="relative flex items-center">
-      <Filter className="text-gray-400 flex-shrink-0 mr-2" aria-hidden="true" />
+      <Filter className="text-gray-400 flex-shrink-0 mr-4" aria-hidden="true" />
 
       {showLeftArrow && (
         <button
@@ -80,6 +86,7 @@ export const ScrollableCategories = ({ categories, selectedCategory, onSelectCat
               {category}
             </button>
           ))}
+
         </div>
       </div>
 

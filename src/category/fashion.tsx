@@ -5,6 +5,7 @@ import ProductCard from '../components/ProductCard';
 import { allProducts } from '../data/allProducts';
 import { mensProducts } from '../data/mensProducts';
 import { womanProducts } from '../data/womanProducts';
+import { ScrollableCategories } from '../components/common/ScrollableCategories';
 
 // Combine all products from different categories
 const categories = [
@@ -51,21 +52,12 @@ const Fashion = () => {
               />
             </div>
           </div>
-          <div className="flex items-center gap-2 overflow-x-auto pb-2">
-            <Filter className="text-gray-400" />
-            {categories.map((category) => (
-              <button
-                key={category}
-                onClick={() => setSelectedCategory(category)}
-                className={`px-4 py-2 rounded-full text-sm whitespace-nowrap ${
-                  selectedCategory === category
-                    ? 'bg-sky-600 text-white'
-                    : 'bg-white text-gray-600 hover:bg-gray-100'
-                }`}
-              >
-                {category}
-              </button>
-            ))}
+<div className="flex-1">
+            <ScrollableCategories
+              categories={allCategories}
+              selectedCategory={selectedCategory}
+              onSelectCategory={setSelectedCategory}
+            />
           </div>
         </div>
 

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
@@ -9,6 +9,7 @@ import { Regalo } from '../data/regalo';
 import { mensProducts } from '../data/mensProducts';
 import { womanProducts } from '../data/womanProducts';
 import { herramientas } from '../data/herramientasProducts';
+import axios from 'axios';
 
 // Combine all products from different categories
 const combinedProducts = [
@@ -24,8 +25,22 @@ const combinedProducts = [
 const allCategories = ["Todos", ...new Set(combinedProducts.map(product => product.category))];
 
 const AllProducts = () => {
+  const [categories, setCategories] = useState<string[]>([]); // Almacenar categorías dinámicamente
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [searchQuery, setSearchQuery] = useState("");
+
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const response = await axios.get('http://127.0.0.1:8000/api/category/list');
+        const categories = response.data.Categories.map((category: { name: string }) => category.name);
+        setCategories(["Todos", ...categories]);
+      } catch (error) {
+        console.error("Error al cargar las categorías:", error);
+      }
+    };
+    fetchCategories();
+  }, []);
 
   const filteredProducts = combinedProducts.filter(product => {
     const matchesCategory = selectedCategory === "Todos" || product.category === selectedCategory;
