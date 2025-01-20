@@ -3,7 +3,7 @@ import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react'
 
 const Footer = () => {
     return (
-        <footer className="bg-gradient-to-r from-red-600 to-sky-400 text-sky-100">
+        <footer className="bg-gradient-to-r from-gray-700 to-gray-300 text-sky-100">
             <div className="max-w-7xl mx-auto px-4 py-12">
                 <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
                     {/* About Section */}
@@ -18,24 +18,10 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-semibold mb-4">Enlaces Rápidos</h3>
                         <ul className="space-y-2">
+                            
                             <li>
-                                <Link to="/mens" className="text-sky-200 hover:text-white transition-colors">
-                                    Moda de Hombre
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/women" className="text-sky-200 hover:text-white transition-colors">
-                                    Moda de Mujer
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/herramientas" className="text-sky-200 hover:text-white transition-colors">
-                                    Herramientas
-                                </Link>
-                            </li>
-                            <li>
-                                <Link to="/tecnologia" className="text-sky-200 hover:text-white transition-colors">
-                                    Tecnología
+                                <Link to="/products" className="text-sky-200 hover:text-white transition-colors">
+                                    Productos
                                 </Link>
                             </li>
                         </ul>

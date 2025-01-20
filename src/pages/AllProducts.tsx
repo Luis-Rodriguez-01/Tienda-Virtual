@@ -4,30 +4,15 @@ import { Search } from 'lucide-react';
 import ProductCard from '../components/ProductCard';
 import {ScrollableCategories} from '../components/common/ScrollableCategories';
 import { allProducts } from '../data/allProducts';
-import { accessories } from '../data/accessories';
-import { Regalo } from '../data/regalo';
-import { mensProducts } from '../data/mensProducts';
-import { womanProducts } from '../data/womanProducts';
-import { herramientas } from '../data/herramientasProducts';
 import axios from 'axios';
 
-// Combine all products from different categories
-const combinedProducts = [
-  ...allProducts,
-  ...accessories,
-  ...Regalo,
-  ...mensProducts,
-  ...womanProducts,
-  ...herramientas
-];
-
 // Get unique categories from all products
-const allCategories = ["Todos", ...new Set(combinedProducts.map(product => product.category))];
 
 const AllProducts = () => {
   const [categories, setCategories] = useState<string[]>([]); // Almacenar categorías dinámicamente
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [searchQuery, setSearchQuery] = useState("");
+
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -42,7 +27,7 @@ const AllProducts = () => {
     fetchCategories();
   }, []);
 
-  const filteredProducts = combinedProducts.filter(product => {
+  const filteredProducts = allProducts.filter(product => {
     const matchesCategory = selectedCategory === "Todos" || product.category === selectedCategory;
     const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
     return matchesCategory && matchesSearch;
@@ -51,11 +36,11 @@ const AllProducts = () => {
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
-      <div className="relative bg-gradient-to-r from-red-600 to-sky-400 text-white py-12">
+      <div className="relative bg-gradient-to-r from-gray-700 to-gray-300 text-white py-12">
         <div className="max-w-7xl mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Todos los Productos</h1>
+          <h1 className="text-4xl font-bold mb-4">Fragancias Exclusivas</h1>
           <p className="text-lg text-white/90">
-            Explora nuestra colección completa
+            Descubre nuestra colección de perfumes de lujo
           </p>
         </div>
       </div>
@@ -68,7 +53,7 @@ const AllProducts = () => {
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400" />
               <input
                 type="text"
-                placeholder="Buscar productos..."
+                placeholder="Buscar fragancias..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
@@ -77,7 +62,7 @@ const AllProducts = () => {
           </div>
           <div className="flex-1">
             <ScrollableCategories
-              categories={allCategories}
+              categories={categories}
               selectedCategory={selectedCategory}
               onSelectCategory={setSelectedCategory}
             />

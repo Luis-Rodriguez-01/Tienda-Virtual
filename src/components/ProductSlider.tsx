@@ -11,123 +11,224 @@ import 'swiper/css/autoplay';
 const sliderProducts = [
   {
     id: 1,
-    name: 'Vestido Floral Elegante',
-    price: 39.99,
-    originalPrice: 59.99,
-    image: 'https://images.unsplash.com/photo-1612336307429-8a898d10e223?auto=format&fit=crop&w=800&q=80',
+    name: 'Chanel N°5',
+    price: 129.99,
+    originalPrice: 149.99,
+    image: 'https://images.unsplash.com/photo-1541643600914-78b084683601?auto=format&fit=crop&w=800&q=80',
     rating: 4.8,
-    reviewCount: 156,
+    reviewCount: 328,
+    seller: {
+      name: 'Luxury Perfumes',
+      rating: 4.9
+    },
     freeShipping: true
   },
   {
     id: 2,
-    name: 'Bolso de Cuero Premium',
-    price: 89.99,
-    originalPrice: 129.99,
-    image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=800&q=80',
+    name: 'Dior Sauvage',
+    price: 149.99,
+    originalPrice: 179.99,
+    image: 'https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=800&q=80',
     rating: 4.9,
-    reviewCount: 203,
+    reviewCount: 456,
+    seller: {
+      name: 'Premium Scents',
+      rating: 4.8
+    },
     freeShipping: true
   },
   {
     id: 3,
-    name: 'Zapatillas Deportivas Pro',
-    price: 79.99,
-    originalPrice: 99.99,
-    image: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?auto=format&fit=crop&w=800&q=80',
+    name: 'Versace Eros',
+    price: 89.99,
+    originalPrice: 119.99,
+    image: 'https://images.unsplash.com/photo-1587017539504-67cfbddac569?auto=format&fit=crop&w=800&q=80',
     rating: 4.7,
-    reviewCount: 189,
-    freeShipping: false
+    reviewCount: 289,
+    seller: {
+      name: 'Fragrance World',
+      rating: 4.7
+    },
+    freeShipping: true
   },
   {
     id: 4,
-    name: 'Reloj Inteligente Elite',
-    price: 199.99,
-    originalPrice: 299.99,
-    image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=800&q=80',
-    rating: 4.9,
-    reviewCount: 312,
+    name: 'YSL Black Opium',
+    price: 119.99,
+    originalPrice: 139.99,
+    image: 'https://images.unsplash.com/photo-1590736704728-f4730bb30770?auto=format&fit=crop&w=800&q=80',
+    rating: 4.8,
+    reviewCount: 367,
+    seller: {
+      name: 'Luxury Scents',
+      rating: 4.9
+    },
     freeShipping: true
   },
   {
     id: 5,
-    name: 'Chaqueta de Cuero Vintage',
-    price: 129.99,
-    originalPrice: 179.99,
-    image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80',
+    name: "Gucci Flora",
+    price: 139.99,
+    originalPrice: 159.99,
+    image: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80",
     rating: 4.6,
-    reviewCount: 167,
-    freeShipping: true
+    reviewCount: 198,
+    category: "Perfumes Femeninos",
+    freeShipping: true,
+    seller: {
+      name: "Gucci Beauty",
+      rating: 4.8
+    }
   },
   {
     id: 6,
-    name: 'Auriculares Inalámbricos Pro',
-    price: 149.99,
-    originalPrice: 199.99,
-    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80',
-    rating: 4.8,
-    reviewCount: 428,
-    freeShipping: true
+    name: "Paco Rabanne 1 Million",
+    price: 119.99,
+    originalPrice: 139.99,
+    image: "https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=800&q=80",
+    rating: 4.7,
+    reviewCount: 423,
+    category: "Perfumes Masculinos",
+    freeShipping: true,
+    seller: {
+      name: "Paco Rabanne",
+      rating: 4.6
+    }
   },
   {
     id: 7,
-    name: 'Vestido Floral Elegante',
-    price: 39.99,
-    originalPrice: 59.99,
-    image: 'https://images.unsplash.com/photo-1612336307429-8a898d10e223?auto=format&fit=crop&w=800&q=80',
-    rating: 4.8,
-    reviewCount: 156,
-    freeShipping: true
+    name: "Marc Jacobs Daisy",
+    price: 109.99,
+    originalPrice: 129.99,
+    image: "https://images.unsplash.com/photo-1590736704728-f4730bb30770?auto=format&fit=crop&w=800&q=80",
+    rating: 4.5,
+    reviewCount: 167,
+    category: "Perfumes Femeninos",
+    freeShipping: true,
+    seller: {
+      name: "Marc Jacobs",
+      rating: 4.7
+    }
   },
   {
     id: 8,
-    name: 'Bolso de Cuero Premium',
-    price: 89.99,
-    originalPrice: 129.99,
-    image: 'https://images.unsplash.com/photo-1591561954557-26941169b49e?auto=format&fit=crop&w=800&q=80',
-    rating: 4.9,
-    reviewCount: 203,
-    freeShipping: true
+    name: "Armani Code",
+    price: 134.99,
+    originalPrice: 159.99,
+    image: "https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80",
+    rating: 4.8,
+    reviewCount: 289,
+    category: "Perfumes Masculinos",
+    freeShipping: true,
+    seller: {
+      name: "Armani Beauty",
+      rating: 4.8
+    }
   },
   {
     id: 9,
-    name: 'Zapatillas Deportivas Pro',
-    price: 79.99,
-    originalPrice: 99.99,
-    image: 'https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?auto=format&fit=crop&w=800&q=80',
-    rating: 4.7,
-    reviewCount: 189,
-    freeShipping: false
+    name: "Carolina Herrera Good Girl",
+    price: 149.99,
+    originalPrice: 179.99,
+    image: "https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=800&q=80",
+    rating: 4.9,
+    reviewCount: 345,
+    category: "Perfumes Femeninos",
+    freeShipping: true,
+    seller: {
+      name: "Carolina Herrera",
+      rating: 4.9
+    }
   },
   {
     id: 10,
-    name: 'Reloj Inteligente Elite',
-    price: 199.99,
-    originalPrice: 299.99,
-    image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12?auto=format&fit=crop&w=800&q=80',
+    name: "Tom Ford Oud Wood",
+    price: 299.99,
+    originalPrice: 349.99,
+    image: "https://images.unsplash.com/photo-1588405748880-12d1d2a59f75?auto=format&fit=crop&w=800&q=80",
     rating: 4.9,
-    reviewCount: 312,
-    freeShipping: true
+    reviewCount: 178,
+    category: "Perfumes de Lujo",
+    freeShipping: true,
+    seller: {
+      name: "Tom Ford Beauty",
+      rating: 4.9
+    }
   },
   {
     id: 11,
-    name: 'Chaqueta de Cuero Vintage',
-    price: 129.99,
-    originalPrice: 179.99,
-    image: 'https://images.unsplash.com/photo-1551028719-00167b16eac5?auto=format&fit=crop&w=800&q=80',
-    rating: 4.6,
-    reviewCount: 167,
-    freeShipping: true
+    name: "Hermès Terre d'Hermès",
+    price: 179.99,
+    originalPrice: 209.99,
+    image: "https://images.unsplash.com/photo-1524638431109-93d95c968f03?auto=format&fit=crop&w=800&q=80",
+    rating: 4.7,
+    reviewCount: 234,
+    category: "Perfumes Masculinos",
+    freeShipping: true,
+    seller: {
+      name: "Hermès Official",
+      rating: 4.8
+    }
   },
   {
     id: 12,
-    name: 'Auriculares Inalámbricos Pro',
-    price: 149.99,
-    originalPrice: 199.99,
-    image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80',
+    name: "Jo Malone London",
+    price: 159.99,
+    originalPrice: 189.99,
+    image: "https://cdn.pixabay.com/photo/2019/04/06/19/22/glass-4108085_1280.jpg",
+    rating: 4.6,
+    reviewCount: 156,
+    category: "Perfumes de Lujo",
+    freeShipping: true,
+    seller: {
+      name: "Jo Malone",
+      rating: 4.7
+    }
+  },
+  {
+    id: 13,
+    name: "Dolce & Gabbana Light Blue",
+    price: 129.99,
+    originalPrice: 149.99,
+    image: "https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80",
     rating: 4.8,
-    reviewCount: 428,
-    freeShipping: true
+    reviewCount: 312,
+    category: "Perfumes Femeninos",
+    freeShipping: true,
+    seller: {
+      name: "D&G Beauty",
+      rating: 4.8
+    }
+  },
+  {
+    id: 14,
+    name: "Creed Aventus",
+    price: 399.99,
+    originalPrice: 449.99,
+    image: "https://images.unsplash.com/photo-1523293182086-7651a899d37f?auto=format&fit=crop&w=800&q=80",
+    rating: 4.9,
+    reviewCount: 198,
+    category: "Perfumes de Lujo",
+    freeShipping: true,
+    seller: {
+      name: "Creed Boutique",
+      rating: 4.9
+    }
+  },
+  {
+    id: 15,
+    name: "Byredo Gypsy Water",
+    price: 289.99,
+    originalPrice: 329.99,
+    image: "https://images.unsplash.com/photo-1590047387154-0ac8c9c45c11?auto=format&fit=crop&w=800&q=80",
+    rating: 4.7,
+    reviewCount: 145,
+    category: "Perfumes de Lujo",
+    freeShipping: true,
+    seller: {
+      name: "Byredo",
+      rating: 4.8
+    }
   }
   
 ];
@@ -140,7 +241,7 @@ const ProductSlider = () => {
         <Swiper
           modules={[Autoplay, Pagination]}
           spaceBetween={20}
-          slidesPerView={1}
+          slidesPerView={4}
           autoplay={{
             delay: 2000,
             disableOnInteraction: false,
@@ -159,20 +260,20 @@ const ProductSlider = () => {
               slidesPerView: 4,
             },
           }}
-          className="pb-12"
+          className="pb-16"
         >
           {sliderProducts.map((product) => (
             <SwiperSlide key={product.id}>
               <Link to={`/product/${product.id}`}>
                 <motion.div
                   whileHover={{ y: -5 }}
-                  className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow"
+                  className="bg-white rounded-lg shadow-md overflow-hidden hover:shadow-md transition-shadow"
                 >
                   <div className="relative aspect-w-1 aspect-h-1">
                     <img
                       src={product.image}
                       alt={product.name}
-                      className="w-full h-48 object-cover"
+                      className="w-full h-56 object-cover"
                     />
                     {product.originalPrice > product.price && (
                       <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-medium">

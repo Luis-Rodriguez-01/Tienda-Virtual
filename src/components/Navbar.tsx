@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { ShoppingCart, Menu, X, UserPlus, LogIn, Gem } from 'lucide-react';
+import { ShoppingCart, Menu, X, User, UserPlus, LogIn, Gem } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CartDropdown from './CartDropdown';
 import AuthModal from './AuthModal';
@@ -17,14 +17,11 @@ const Navbar = () => {
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const navItems = [
-    { to: '/mens', label: 'Moda Hombre' },
-    { to: '/women', label: 'Moda Mujer' },
-    { to: '/herramientas', label: 'Herramientas' },
-    { to: '/tecnologia', label: 'Tecnología' },
+    { to: '/products', label: 'Productos' },
   ];
 
   return (
-    <nav className="bg-gradient-to-r from-red-600 to-sky-400 text-white shadow-lg relative">
+    <nav className="bg-gradient-to-r from-gray-700 to-gray-300 text-white shadow-lg relative">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex justify-between items-center h-16">
           <div className="flex items-center">
