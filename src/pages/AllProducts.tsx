@@ -1,14 +1,16 @@
 import { useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { Search } from 'lucide-react';
-import ProductCard from '../components/ProductCard';
+import {ProductCard} from '../components/ProductCard';
 import {ScrollableCategories} from '../components/common/ScrollableCategories';
 import { allProducts } from '../data/allProducts';
 import axios from 'axios';
+import { useSearchParams } from 'react-router-dom';
 
 // Get unique categories from all products
 
 const AllProducts = () => {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [categories, setCategories] = useState<string[]>([]); // Almacenar categorías dinámicamente
   const [selectedCategory, setSelectedCategory] = useState("Todos");
   const [searchQuery, setSearchQuery] = useState("");
@@ -17,15 +19,30 @@ const AllProducts = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
+        // Update search query when URL parameter changes
+    const searchFromUrl = searchParams.get('search');
+    if (searchFromUrl) {
+      setSearchQuery(searchFromUrl);
+    }
         const response = await axios.get('http://127.0.0.1:8000/api/category/list');
         const categories = response.data.Categories.map((category: { name: string }) => category.name);
         setCategories(["Todos", ...categories]);
       } catch (error) {
         console.error("Error al cargar las categorías:", error);
       }
+      
     };
     fetchCategories();
-  }, []);
+  }, []),[searchParams];
+
+  const handleSearch = (query: string) => {
+    setSearchQuery(query);
+    if (query) {
+      setSearchParams({ search: query });
+    } else {
+      setSearchParams({});
+    }
+  };
 
   const filteredProducts = allProducts.filter(product => {
     const matchesCategory = selectedCategory === "Todos" || product.category === selectedCategory;
@@ -55,7 +72,7 @@ const AllProducts = () => {
                 type="text"
                 placeholder="Buscar fragancias..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={(e) => handleSearch(e.target.value)}
                 className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
               />
             </div>

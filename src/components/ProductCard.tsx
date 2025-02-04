@@ -1,6 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Heart, Star, TruckIcon, ShoppingCart } from 'lucide-react';
+import { Heart, Star, TruckIcon, ShoppingCart, AlertCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useCart } from '../context/CartContext';
 import { useAuth } from '../context/AuthContext';
@@ -22,7 +22,7 @@ interface ProductCardProps {
   };
 }
 
-const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
+export const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
   const { addToCart } = useCart();
   const { isAuthenticated } = useAuth();
   
@@ -32,6 +32,10 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
   const handleAddToCart = (e: React.MouseEvent) => {
     e.preventDefault(); // Prevent navigation when clicking the button
+    if (!isAuthenticated) {
+      // You could also show a modal or redirect to login
+      return;
+    }
     addToCart({
       id: product.id,
       name: product.name,
@@ -98,15 +102,16 @@ const ProductCard: React.FC<ProductCardProps> = ({ product }) => {
 
           <button
             onClick={handleAddToCart}
-            className="mt-4 w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-2"
+            className={`mt-4 w-full py-2 px-4 rounded-lg flex items-center justify-center gap-2 transition-colors
+              ${isAuthenticated 
+                ? 'bg-sky-600 text-white hover:bg-sky-700' 
+                : 'bg-gray-100 text-gray-400 cursor-not-allowed'}`}
           >
             <ShoppingCart className="w-4 h-4" />
-            <span>Añadir al carrito</span>
+            <span>{isAuthenticated ? 'Añadir al carrito' : 'Inicia sesión para comprar'}</span>
           </button>
         </div>
       </Link>
     </motion.div>
   );
 };
-
-export default ProductCard;

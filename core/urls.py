@@ -7,6 +7,7 @@ from django.conf.urls.static import static
 urlpatterns = [
     path('api/modahombre/', include ('apps.Moda_Hombre.urls')),
     path('api/category/', include('apps.Category.urls')),
+    path('api/products/', include('apps.Productos.urls')),
     path('admin/', admin.site.urls),
 
     path('', TemplateView.as_view(template_name='index.html')),

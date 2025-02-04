@@ -28,6 +28,7 @@ INSTALLED_APPS = [
     'ckeditor_uploader',
     'apps.Category',
     'apps.Moda_Hombre',
+    'apps.Productos'
 ]
 CKEDITOR_CONFIGS = {
     'default':{
@@ -71,8 +72,12 @@ WSGI_APPLICATION = 'core.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR/ 'db_sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'Perfumeria',
+        'USER': 'postgres',
+        'PASSWORD': '01LYRCm.j+',
+        'HOST': 'localhost',
+        'PORT': '5432',
         
     }
 }

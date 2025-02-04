@@ -1,7 +1,8 @@
 import { motion } from 'framer-motion';
 import { Search, ArrowRight } from 'lucide-react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import ProductSlider from '../components/ProductSlider';
+import { useState } from 'react';
 
 const featuredProducts = [
   {
@@ -63,6 +64,16 @@ const featuredProducts = [
 ];
 
 const Home = () => {
+  const [searchQuery, setSearchQuery] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
+
   return (
     <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
@@ -91,24 +102,29 @@ const Home = () => {
               transition={{ delay: 0.4 }}
               className="max-w-2xl mx-auto"
             >
-              <div className="flex items-center bg-white rounded-lg p-2">
+              <form onSubmit={handleSearch} className="flex items-center bg-white rounded-lg p-2">
                 <Search className="w-6 h-6 text-gray-400 ml-2" />
                 <input
                   type="text"
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
                   placeholder="Busca tu perfume favorito..."
                   className="flex-1 px-4 py-2 text-gray-900 focus:outline-none"
                 />
-                <button className="bg-sky-600 text-white px-6 py-2 rounded-md hover:bg-sky-700 transition-colors">
+                <button 
+                  type="submit"
+                  className="bg-sky-600 text-white px-6 py-2 rounded-md hover:bg-sky-700 transition-colors"
+                >
                   Buscar
                 </button>
-              </div>
+              </form>
             </motion.div>
           </div>
         </div>
       </div>
 
       {/* Featured Products */}
-      <div className="py-16">
+      <div className="py-12">
         <div className="max-w-7xl mx-auto px-4">
           <div className="flex justify-between items-center mb-8">
             <h2 className="text-2xl font-bold text-gray-900">Fragancias Destacadas</h2>
@@ -131,7 +147,7 @@ const Home = () => {
                   <img
                     src={product.image}
                     alt={product.name}
-                    className="w-full h-60 object-cover"
+                    className="w-full h-48 object-cover"
                   />
                   {product.originalPrice > product.price && (
                     <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-medium">
@@ -162,7 +178,7 @@ const Home = () => {
             alt="Luxury Perfumes"
             className="w-full h-full object-cover blur-sm"
           />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-inherit to-transparent" />
+          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
         </div>
         <div className="absolute inset-0 flex items-center">
           <div className="max-w-7xl mx-auto px-4 w-full">
@@ -173,16 +189,16 @@ const Home = () => {
                 transition={{ duration: 0.8 }}
                 viewport={{ once: true }}
               >
-                <h2 className="text-5xl font-bold text-black mb-6">
+                <h2 className="text-5xl font-bold text-white mb-6">
                   El Arte de la Perfumería
                 </h2>
-                <p className="text-xl text-gray-800 mb-8 leading-relaxed">
+                <p className="text-xl text-gray-200 mb-8 leading-relaxed">
                   Descubre una colección exclusiva de fragancias que capturan la esencia de la elegancia y el lujo. 
                   Cada aroma cuenta una historia única, diseñada para despertar tus sentidos.
                 </p>
                 <Link
                   to="/products"
-                  className="inline-block bg-white/10 backdrop-blur-md text-black border-2 border-white px-8 py-4 rounded-full font-semibold 
+                  className="inline-block bg-white/10 backdrop-blur-md text-white border-2 border-white px-8 py-4 rounded-full font-semibold 
                             hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105"
                 >
                   Explorar Colección
