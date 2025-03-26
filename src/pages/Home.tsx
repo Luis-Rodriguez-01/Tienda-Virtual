@@ -1,71 +1,65 @@
+import { useState, useEffect, useRef, useCallback } from 'react';
 import { motion } from 'framer-motion';
-import { Search, ArrowRight } from 'lucide-react';
-import { Link, useNavigate } from 'react-router-dom';
-import ProductSlider from '../components/ProductSlider';
-import { useState } from 'react';
+import { Search } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
+import { Product } from '../types/product';
+import ProductCard from '../components/ProductCard';
 
-const featuredProducts = [
-  {
-    id: 1,
-    name: 'Dior J\'adore',
-    price: 129.99,
-    originalPrice: 149.99,
-    image: 'https://images.unsplash.com/photo-1592945403244-b3fbafd7f539?auto=format&fit=crop&w=800&q=80',
-    rating: 4.8,
-    reviewCount: 328,
-    seller: {
-      name: 'Luxury Perfumes',
-      rating: 4.9
-    },
-    freeShipping: true
-  },
-  {
-    id: 2,
-    name: 'Chanel Coco Mademoiselle',
-    price: 149.99,
-    originalPrice: 179.99,
-    image: 'https://images.unsplash.com/photo-1585386959984-a4155224a1ad?auto=format&fit=crop&w=800&q=80',
-    rating: 4.9,
-    reviewCount: 456,
-    seller: {
-      name: 'Premium Scents',
-      rating: 4.8
-    },
-    freeShipping: true
-  },
-  {
-    id: 3,
-    name: 'Tom Ford Black Orchid',
-    price: 189.99,
-    originalPrice: 219.99,
-    image: 'https://images.unsplash.com/photo-1590736704728-f4730bb30770?auto=format&fit=crop&w=800&q=80',
-    rating: 4.7,
-    reviewCount: 289,
-    seller: {
-      name: 'Fragrance World',
-      rating: 4.7
-    },
-    freeShipping: true
-  },
-  {
-    id: 4,
-    name: 'Gucci Bloom',
-    price: 119.99,
-    originalPrice: 139.99,
-    image: 'https://images.unsplash.com/photo-1594035910387-fea47794261f?auto=format&fit=crop&w=800&q=80',
-    rating: 4.8,
-    reviewCount: 367,
-    seller: {
-      name: 'Luxury Scents',
-      rating: 4.9
-    },
-    freeShipping: true
-  }
-];
+const ITEMS_PER_PAGE = 20;
 
 const Home = () => {
   const [searchQuery, setSearchQuery] = useState('');
+  const [products, setProducts] = useState<Product[]>([]);
+  const [page, setPage] = useState(1);
+  const [loading, setLoading] = useState(false);
+  const [hasMore, setHasMore] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+  const observer = useRef<IntersectionObserver>();
   const navigate = useNavigate();
+
+  const lastProductRef = useCallback((node: HTMLDivElement | null) => {
+    if (loading) return;
+    if (observer.current) observer.current.disconnect();
+    
+    observer.current = new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting && hasMore) {
+        setPage(prevPage => prevPage + 1);
+      }
+    });
+
+    if (node) observer.current.observe(node);
+  }, [loading, hasMore]);
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        setLoading(true);
+        const response = await axios.get('http://127.0.0.1:8000/api/products/');
+        const productsData = response.data;
+
+        // If it's the first page, replace all products
+        // If it's a subsequent page, append new products
+        if (page === 1) {
+          setProducts(productsData.slice(0, ITEMS_PER_PAGE));
+        } else {
+          const startIndex = (page - 1) * ITEMS_PER_PAGE;
+          const newProducts = productsData.slice(startIndex, startIndex + ITEMS_PER_PAGE);
+          setProducts(prev => [...prev, ...newProducts]);
+        }
+
+        // Check if there are more products to load
+        setHasMore(productsData.length > page * ITEMS_PER_PAGE);
+      } catch (error) {
+        console.error("Error al cargar los productos:", error);
+        setError("Error al cargar los productos");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchProducts();
+  }, [page]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -73,6 +67,14 @@ const Home = () => {
       navigate(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
     }
   };
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <p className="text-red-500">{error}</p>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -85,7 +87,7 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-4xl md:text-5xl font-bold mb-6"
             >
-              Descubre Tu Fragancia Perfecta
+              Descubre Tu Estilo Perfecto
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -93,7 +95,7 @@ const Home = () => {
               transition={{ delay: 0.2 }}
               className="text-xl text-sky-100 mb-8"
             >
-              Las mejores fragancias de lujo en un solo lugar
+              Los mejores servicios de uñas y pestañas en un solo lugar
             </motion.p>
 
             <motion.div
@@ -108,7 +110,7 @@ const Home = () => {
                   type="text"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
-                  placeholder="Busca tu perfume favorito..."
+                  placeholder="Busca el servicio que deseas..."
                   className="flex-1 px-4 py-2 text-gray-900 focus:outline-none"
                 />
                 <button 
@@ -123,94 +125,62 @@ const Home = () => {
         </div>
       </div>
 
-      {/* Featured Products */}
+      {/* Products Grid */}
       <div className="py-12">
         <div className="max-w-7xl mx-auto px-4">
-          <div className="flex justify-between items-center mb-8">
-            <h2 className="text-2xl font-bold text-gray-900">Fragancias Destacadas</h2>
-            <Link 
-              to="/products" 
-              className="flex items-center text-sky-600 hover:text-sky-700 transition-colors"
-            >
-              Ver todas <ArrowRight className="w-4 h-4 ml-1" />
-            </Link>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {featuredProducts.map((product) => (
-              <motion.div
-                key={product.id}
-                whileHover={{ y: -5 }}
-                className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-md transition-shadow"
-              >
-                <div className="relative aspect-w-1 aspect-h-1">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-full h-48 object-cover"
-                  />
-                  {product.originalPrice > product.price && (
-                    <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 rounded-md text-sm font-medium">
-                      -{Math.round(((product.originalPrice - product.price) / product.originalPrice) * 100)}%
-                    </div>
-                  )}
-                </div>
-                <div className="p-4">
-                  <h3 className="text-lg font-semibold text-gray-900">{product.name}</h3>
-                  <div className="flex items-baseline gap-2 mt-2">
-                    <span className="text-2xl font-bold text-sky-600">${product.price}</span>
-                    {product.originalPrice > product.price && (
-                      <span className="text-sm text-gray-500 line-through">${product.originalPrice}</span>
-                    )}
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </div>
-
-      {/* Enhanced Perfume Banner */}
-      <div className="relative h-[600px] overflow-hidden">
-        <div className="absolute inset-0">
-          <img
-            src="https://images.unsplash.com/photo-1615634260167-c8cdede054de?auto=format&fit=crop&w=2000&q=80"
-            alt="Luxury Perfumes"
-            className="w-full h-full object-cover blur-sm"
-          />
-          <div className="absolute inset-0 bg-gradient-to-r from-black/70 via-black/50 to-transparent" />
-        </div>
-        <div className="absolute inset-0 flex items-center">
-          <div className="max-w-7xl mx-auto px-4 w-full">
-            <div className="max-w-2xl">
-              <motion.div
-                initial={{ opacity: 0, x: -50 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                transition={{ duration: 0.8 }}
-                viewport={{ once: true }}
-              >
-                <h2 className="text-5xl font-bold text-white mb-6">
-                  El Arte de la Perfumería
-                </h2>
-                <p className="text-xl text-gray-200 mb-8 leading-relaxed">
-                  Descubre una colección exclusiva de fragancias que capturan la esencia de la elegancia y el lujo. 
-                  Cada aroma cuenta una historia única, diseñada para despertar tus sentidos.
-                </p>
-                <Link
-                  to="/products"
-                  className="inline-block bg-white/10 backdrop-blur-md text-white border-2 border-white px-8 py-4 rounded-full font-semibold 
-                            hover:bg-white hover:text-gray-900 transition-all duration-300 transform hover:scale-105"
-                >
-                  Explorar Colección
-                </Link>
-              </motion.div>
+          <h2 className="text-2xl font-bold text-gray-900 mb-8">Nuestros Servicios</h2>
+          
+          {loading && products.length === 0 ? (
+            <div className="flex justify-center items-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-sky-600"></div>
             </div>
-          </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+              {products.map((product, index) => {
+                if (products.length === index + 1) {
+                  return (
+                    <motion.div
+                      ref={lastProductRef}
+                      key={product.id}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.3 }}
+                    >
+                      <ProductCard product={product} />
+                    </motion.div>
+                  );
+                }
+                return (
+                  <motion.div
+                    key={product.id}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.3 }}
+                  >
+                    <ProductCard product={product} />
+                  </motion.div>
+                );
+              })}
+            </div>
+          )}
+
+          {/* Loading indicator for more products */}
+          {loading && products.length > 0 && (
+            <div className="text-center py-8">
+              <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-sky-600 border-r-transparent"></div>
+            </div>
+          )}
+
+          {/* No products message */}
+          {!loading && products.length === 0 && (
+            <div className="text-center py-12">
+              <p className="text-gray-500 text-lg">
+                No hay productos disponibles en este momento.
+              </p>
+            </div>
+          )}
         </div>
       </div>
-
-      {/* Product Slider */}
-      <ProductSlider />
     </div>
   );
 };

@@ -1,23 +1,16 @@
 import { useState } from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { ShoppingCart, Menu, X, User, UserPlus, LogIn, Gem } from 'lucide-react';
+import { Menu, X, Gem } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-import CartDropdown from './CartDropdown';
-import AuthModal from './AuthModal';
-import { useCart } from '../context/CartContext';
-import { useAuth } from '../context/AuthContext';
 
 const Navbar = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isCartOpen, setIsCartOpen] = useState(false);
-  const [authMode, setAuthMode] = useState<'login' | 'register' | null>(null);
-  const { items } = useCart();
-  const { user, isAuthenticated, logout } = useAuth();
-
-  const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
 
   const navItems = [
-    { to: '/products', label: 'Productos' },
+    {
+      to: '/products',
+      label: 'Todos'
+    }
   ];
 
   return (
@@ -31,7 +24,7 @@ const Navbar = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center space-x-8">
+          <div className="hidden md:flex items-center space-x-8 ">
             {navItems.map(({ to, label }) => (
               <NavLink
                 key={to}
@@ -44,52 +37,6 @@ const Navbar = () => {
                 <span>{label}</span>
               </NavLink>
             ))}
-
-            <div className="flex items-center space-x-4">
-              {isAuthenticated ? (
-                <>
-                  <span className="text-sky-100">{user?.name}</span>
-                  <button
-                    onClick={logout}
-                    className="text-sky-100 hover:text-sky-300 transition-colors"
-                  >
-                    Cerrar Sesión
-                  </button>
-                </>
-              ) : (
-                <>
-                  <button
-                    onClick={() => setAuthMode('login')}
-                    className="flex items-center space-x-1 text-sm font-medium text-sky-100 hover:text-sky-300 transition-colors"
-                  >
-                    <LogIn className="w-4 h-4" />
-                    <span>Iniciar sesión</span>
-                  </button>
-                  <button
-                    onClick={() => setAuthMode('register')}
-                    className="flex items-center space-x-1 text-sm font-medium bg-sky-600 hover:bg-sky-700 px-3 py-1.5 rounded-md transition-colors"
-                  >
-                    <UserPlus className="w-4 h-4" />
-                    <span>Registrarse</span>
-                  </button>
-                </>
-              )}
-
-              <div className="relative">
-                <button
-                  onClick={() => setIsCartOpen(!isCartOpen)}
-                  className="flex items-center gap-2 text-sky-100 hover:text-sky-300 transition-colors"
-                >
-                  <ShoppingCart className="w-6 h-6" />
-                  {totalItems > 0 && (
-                    <span className="absolute -top-2 -right-2 bg-sky-600 text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-                      {totalItems}
-                    </span>
-                  )}
-                </button>
-                {isCartOpen && <CartDropdown isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />}
-              </div>
-            </div>
           </div>
 
           {/* Mobile Menu Button */}
@@ -122,53 +69,10 @@ const Navbar = () => {
                   {label}
                 </NavLink>
               ))}
-              
-              {isAuthenticated ? (
-                <>
-                  <div className="py-2 border-t">
-                    <span className="text-gray-600">Bienvenido, {user?.name}</span>
-                  </div>
-                  <button
-                    onClick={logout}
-                    className="block w-full text-left py-2 text-gray-600 hover:text-sky-600"
-                  >
-                    Cerrar Sesión
-                  </button>
-                </>
-              ) : (
-                <div className="py-2 border-t space-y-2">
-                  <button
-                    onClick={() => {
-                      setAuthMode('login');
-                      setIsMenuOpen(false);
-                    }}
-                    className="block w-full text-left py-2 text-gray-600 hover:text-sky-600"
-                  >
-                    Iniciar Sesión
-                  </button>
-                  <button
-                    onClick={() => {
-                      setAuthMode('register');
-                      setIsMenuOpen(false);
-                    }}
-                    className="block w-full text-left py-2 text-gray-600 hover:text-sky-600"
-                  >
-                    Registrarse
-                  </button>
-                </div>
-              )}
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* Auth Modal */}
-      <AuthModal
-        isOpen={authMode !== null}
-        mode={authMode}
-        onClose={() => setAuthMode(null)}
-        onSwitchMode={(mode) => setAuthMode(mode)}
-      />
     </nav>
   );
 };

@@ -5,7 +5,7 @@ class Category(models.Model):
     class Meta:
         verbose_name = 'Category'
         verbose_name_plural = 'Categories'
-
+        
     name = models.CharField(max_length=200, unique=True)
     slug = models.SlugField(max_length=200, unique=True)
 
@@ -19,6 +19,7 @@ class Category(models.Model):
     def get_view_count(self):
         views = ViewCount.objects.filter(category=self).count()
         return views
+    
 
 class ViewCount(models.Model):
     category = models.ForeignKey(Category, related_name='category_view_count', on_delete=models.CASCADE)
@@ -26,3 +27,4 @@ class ViewCount(models.Model):
 
     def __str__(self):
         return f"{self.ip_addres}"
+

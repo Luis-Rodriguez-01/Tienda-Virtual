@@ -27,7 +27,6 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'apps.Category',
-    'apps.Moda_Hombre',
     'apps.Productos'
 ]
 CKEDITOR_CONFIGS = {
@@ -73,7 +72,7 @@ WSGI_APPLICATION = 'core.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Perfumeria',
+        'NAME': 'Catalogo',
         'USER': 'postgres',
         'PASSWORD': '01LYRCm.j+',
         'HOST': 'localhost',
@@ -109,7 +108,7 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
 STATICFILES_DIRS = [
-    BASE_DIR / 'src'
+     os.path.join(BASE_DIR, 'dist')
 ]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

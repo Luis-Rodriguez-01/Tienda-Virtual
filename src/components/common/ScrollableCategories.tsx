@@ -12,6 +12,7 @@ export const ScrollableCategories = ({ categories, selectedCategory, onSelectCat
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);
+  const [categoryList, setCategoryList] = useState<string[]>(["Todos"]);
 
   const checkScroll = () => {
     if (!scrollContainerRef.current) return;
@@ -27,17 +28,18 @@ export const ScrollableCategories = ({ categories, selectedCategory, onSelectCat
   
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const response = await axios.get('http://127.0.0.1:8000/api/category/list');
-        const categories = response.data.Categories.map((category: { name: string }) => category.name);
-        categories(["Todos", ...categories]);
-      } catch (error) {
-        console.error("Error al cargar las categorías:", error);
-      }
-    };
-    fetchCategories();
-  }, [categories]);
+  const fetchCategories = async () => {
+    try {
+      const response = await axios.get('http://127.0.0.1:8000/api/category/list');
+      const fetchedCategories = response.data.Categories.map((category: { name: string }) => category.name);
+      setCategoryList(["Todos", ...fetchedCategories]);  // 👈 Ahora actualiza el estado correctamente
+    } catch (error) {
+      console.error("Error al cargar las categorías:", error);
+    }
+  };
+  fetchCategories();
+}, []);
+
 
   const scroll = (direction: 'left' | 'right') => {
     if (!scrollContainerRef.current) return;
@@ -72,20 +74,20 @@ export const ScrollableCategories = ({ categories, selectedCategory, onSelectCat
         onScroll={checkScroll}
       >
         <div className="flex gap-2 px-8">
-          {categories.map((category) => (
-            <button
-              key={category}
-              onClick={() => onSelectCategory(category)}
-              className={`px-4 py-2 rounded-full text-sm whitespace-nowrap flex-shrink-0 transition-colors ${
-                selectedCategory === category
-                  ? 'bg-sky-600 text-white'
-                  : 'bg-white text-gray-600 hover:bg-gray-100'
-              }`}
-              aria-pressed={selectedCategory === category}
-            >
-              {category}
-            </button>
-          ))}
+        {categoryList.map((category) => (
+          <button
+            key={category}
+            onClick={() => onSelectCategory(category)}
+            className={`px-4 py-2 rounded-full text-sm whitespace-nowrap flex-shrink-0 transition-colors ${
+            selectedCategory === category ? 'bg-sky-600 text-white': 'bg-white text-gray-600 hover:bg-gray-100'
+    
+          }`}
+            aria-pressed={selectedCategory === category}
+      >
+        {category}
+          </button>
+        ))}
+
 
         </div>
       </div>

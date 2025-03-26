@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  base: "/", // Asegura que los archivos se carguen desde la raíz
   server: {
     proxy: {
       '/api': {
@@ -15,5 +16,6 @@ export default defineConfig({
         changeOrigin: true,
       },
     },
+    
   },
 });
