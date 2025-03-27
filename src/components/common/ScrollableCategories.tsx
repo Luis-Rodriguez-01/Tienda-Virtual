@@ -8,7 +8,7 @@ interface ScrollableCategoriesProps {
   onSelectCategory: (category: string) => void;
 }
 
-export const ScrollableCategories = ({ categories, selectedCategory, onSelectCategory }: ScrollableCategoriesProps) => {
+export const ScrollableCategories = ({ selectedCategory, onSelectCategory }: ScrollableCategoriesProps) => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [showLeftArrow, setShowLeftArrow] = useState(false);
   const [showRightArrow, setShowRightArrow] = useState(false);

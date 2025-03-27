@@ -101,15 +101,17 @@ TIME_ZONE = 'America/Lima'
 USE_I18N = True
 USE_TZ = True
 
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
+
 STATIC_URL = '/static/'
+STATIC_ROOT = BASE_DIR / "staticfiles" 
+STATICFILES_DIRS = [
+     os.path.join(BASE_DIR, 'static'),
+     os.path.join(BASE_DIR, 'dist')
+]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 
-STATICFILES_DIRS = [
-     os.path.join(BASE_DIR, 'dist')
-]
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -127,5 +129,6 @@ SIMPLE_JWT = {
 
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:5173",
+    "http://localhost:8000"
 ]
 
