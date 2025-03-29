@@ -3,17 +3,26 @@ from datetime import timedelta
 import os
 import environ
 
-env = environ.Env()
-environ.Env.read_env(os.path.join('.env'))
+# Cargar variables de entorno
+env = environ.Env(
+    DEBUG=(bool, False)  # Por defecto, DEBUG es False
+)
 
+# Leer .env si existe (solo en desarrollo)
+if os.path.exists('.env'):
+    environ.Env.read_env('.env')
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get('SECRET_KEY')
+# Variables de entorno
+SECRET_KEY = env("SECRET_KEY", default="fallback-secret-key")
+DEBUG = env("DEBUG", default=False)
 
-DEBUG = os.getenv('DEBUG')
-
-ALLOWED_HOSTS = env.list('ALLOWED_HOSTS_DEV')
+# Configurar ALLOWED_HOSTS según el entorno
+if DEBUG:
+    ALLOWED_HOSTS = env.list("ALLOWED_HOSTS_DEV", default=["localhost", "127.0.0.1"])
+else:
+    ALLOWED_HOSTS = env.list("ALLOWED_HOSTS_DEPLOY", default=["example.com", "api.example.com"])
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -27,15 +36,16 @@ INSTALLED_APPS = [
     'ckeditor',
     'ckeditor_uploader',
     'apps.Category',
-    'apps.Productos'
+    'apps.Productos',
 ]
+
 CKEDITOR_CONFIGS = {
-    'default':{
+    'default': {
         'toolbar': 'full',
         'autoParagraph': False
-
     }
 }
+
 CKEDITOR_UPLOAD_PATH = "/media/"
 
 MIDDLEWARE = [
@@ -69,31 +79,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'core.wsgi.application'
 
+# Configuración de la base de datos
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'Catalogo',
-        'USER': 'postgres',
-        'PASSWORD': '01LYRCm.j+',
-        'HOST': 'localhost',
-        'PORT': '5432',
-        
+        'NAME': env("DB_NAME", default="Catalogo"),
+        'USER': env("DB_USER", default="postgres"),
+        'PASSWORD': env("DB_PASSWORD", default=""),
+        'HOST': env("DB_HOST", default="localhost"),
+        'PORT': env("DB_PORT", default="5432"),
     }
 }
 
 AUTH_PASSWORD_VALIDATORS = [
-    {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
-    },
-    {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
-    },
+    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
+    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'},
 ]
 
 LANGUAGE_CODE = 'es'
@@ -101,17 +103,15 @@ TIME_ZONE = 'America/Lima'
 USE_I18N = True
 USE_TZ = True
 
-
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / "staticfiles" 
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
-     os.path.join(BASE_DIR, 'static'),
-     os.path.join(BASE_DIR, 'dist')
+    os.path.join(BASE_DIR, 'static'),
+    os.path.join(BASE_DIR, 'dist'),
 ]
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -127,8 +127,8 @@ SIMPLE_JWT = {
     'ROTATE_REFRESH_TOKENS': False,
 }
 
-CORS_ALLOWED_ORIGINS = [
+# CORS
+CORS_ALLOWED_ORIGINS = env.list("CORS_ALLOWED_ORIGINS", default=[
     "http://localhost:5173",
     "http://localhost:8000"
-]
-
+])
