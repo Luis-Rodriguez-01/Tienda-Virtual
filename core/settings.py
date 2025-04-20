@@ -16,7 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Variables de entorno
 SECRET_KEY = env("SECRET_KEY", default="fallback-secret-key")
-DEBUG = True
+DEBUG = False
 
 INSTALLED_APPS = [
     'django.contrib.admin',
