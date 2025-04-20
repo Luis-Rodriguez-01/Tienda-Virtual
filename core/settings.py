@@ -16,13 +16,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Variables de entorno
 SECRET_KEY = env("SECRET_KEY", default="fallback-secret-key")
-DEBUG = env("DEBUG", default=False)
-
-# Configurar ALLOWED_HOSTS según el entorno
-if DEBUG:
-    ALLOWED_HOSTS = env.list("ALLOWED_HOSTS_DEV", default=["localhost", "127.0.0.1"])
-else:
-    ALLOWED_HOSTS = env.list("ALLOWED_HOSTS_DEPLOY", default=["example.com", "api.example.com"])
+DEBUG = True
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -85,7 +79,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': env("DB_NAME", default="Catalogo"),
         'USER': env("DB_USER", default="postgres"),
-        'PASSWORD': env("DB_PASSWORD", default=""),
+        'PASSWORD': env("DB_PASSWORD", default="01LYRCm.j+"),
         'HOST': env("DB_HOST", default="localhost"),
         'PORT': env("DB_PORT", default="5432"),
     }
@@ -106,7 +100,6 @@ USE_TZ = True
 STATIC_URL = '/static/'
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
     os.path.join(BASE_DIR, 'dist'),
 ]
 
