@@ -75,7 +75,7 @@ TEMPLATES = [
 WSGI_APPLICATION = 'core.wsgi.application'
 
 # Configuración de la base de datos
-DATABASES = {
+""" DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': env("DB_NAME", default="Catalogo"),
@@ -83,6 +83,12 @@ DATABASES = {
         'PASSWORD': env("DB_PASSWORD", default="01LYRCm.j+"),
         'HOST': env("DB_HOST", default="localhost"),
         'PORT': env("DB_PORT", default="5432"),
+    }
+} """
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
