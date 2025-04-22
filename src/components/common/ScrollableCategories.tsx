@@ -30,7 +30,8 @@ export const ScrollableCategories = ({ selectedCategory, onSelectCategory }: Scr
   useEffect(() => {
   const fetchCategories = async () => {
     try {
-      const response = await axios.get('http://127.0.0.1:8000/api/category/list');
+      const response = await axios.get('https://luisyoiselrodriguezcaballero.pythonanywhere.com/api/category/list');
+
       const fetchedCategories = response.data.Categories.map((category: { name: string }) => category.name);
       setCategoryList(["Todos", ...fetchedCategories]);  // 👈 Ahora actualiza el estado correctamente
     } catch (error) {

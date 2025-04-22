@@ -35,7 +35,7 @@ const Home = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://127.0.0.1:8000/api/products/');
+        const response = await axios.get('https://luisyoiselrodriguezcaballero.pythonanywhere.com/api/products/');
         const productsData = response.data;
 
         // If it's the first page, replace all products
@@ -87,7 +87,7 @@ const Home = () => {
               animate={{ opacity: 1, y: 0 }}
               className="text-4xl md:text-5xl font-bold mb-6"
             >
-              Descubre Tu Estilo Perfecto
+              Sorprende con un Regalo Inolvidable
             </motion.h1>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -95,7 +95,7 @@ const Home = () => {
               transition={{ delay: 0.2 }}
               className="text-xl text-sky-100 mb-8"
             >
-              Los mejores servicios de uñas y pestañas en un solo lugar
+              Ramos y detalles únicos para cada ocasión
             </motion.p>
 
             <motion.div

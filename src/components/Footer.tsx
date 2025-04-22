@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Facebook, Twitter, Instagram, Mail, Phone, MapPin } from 'lucide-react';
+import { Facebook, Instagram, Mail, Phone, MapPin } from 'lucide-react';
 
 const Footer = () => {
     return (
@@ -10,7 +10,7 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-semibold mb-4">Sobre Nosotros</h3>
                         <p className="text-sky-200 text-sm">
-                            Paradise Store es tu destino para encontrar todo lo que necesitas, desde productos de limpieza hasta alimentos frescos y ropa de calidad.
+                        En Paradise Store creamos regalos únicos y hechos a mano para momentos especiales. Nos especializamos en ramos decorativos y combinaciones con bombones, diseñados con amor y dedicación. Cada detalle cuenta, y nosotros nos encargamos de que el tuyo sea inolvidable. 💐🎁
                         </p>
                     </div>
 
@@ -37,11 +37,11 @@ const Footer = () => {
                             </div>
                             <div className="flex items-center gap-2 text-sky-200">
                                 <Phone className="w-4 h-4" />
-                                <span>+53 (555) 530-52</span>
+                                <span>+53 59186994</span>
                             </div>
                             <div className="flex items-center gap-2 text-sky-200">
                                 <MapPin className="w-4 h-4" />
-                                <span>Ciudad Habana, Cuba</span>
+                                <span>Santiago de Cuba, Cuba</span>
                             </div>
                         </div>
                     </div>
@@ -50,13 +50,11 @@ const Footer = () => {
                     <div>
                         <h3 className="text-lg font-semibold mb-4">Síguenos</h3>
                         <div className="flex space-x-4">
-                            <a href="#" className="text-sky-200 hover:text-white transition-colors">
+                            <a href="https://www.facebook.com/profile.php?id=61575569218426" className="text-sky-200 hover:text-white transition-colors">
                                 <Facebook className="w-6 h-6" />
                             </a>
-                            <a href="#" className="text-sky-200 hover:text-white transition-colors">
-                                <Twitter className="w-6 h-6" />
-                            </a>
-                            <a href="#" className="text-sky-200 hover:text-white transition-colors">
+                            
+                            <a href="https://www.instagram.com/01_luis_rodriguez?utm_source=qr&igsh=MW" className="text-sky-200 hover:text-white transition-colors">
                                 <Instagram className="w-6 h-6" />
                             </a>
                         </div>
@@ -65,6 +63,7 @@ const Footer = () => {
 
                 <div className="border-t border-sky-800 mt-8 pt-8 text-center text-sky-200">
                     <p>&copy; {new Date().getFullYear()} Paradise Store. Todos los derechos reservados.</p>
+                    <p>Desarrollado por <a href="https://www.facebook.com/profile.php?id=61575569218426">RodSolutions</a></p>
                 </div>
             </div>
         </footer>

@@ -10,7 +10,7 @@ class Product(models.Model):
         verbose_name_plural = 'Productos'
     name = models.CharField(max_length=50, unique=True)
     price = models.FloatField(default=0.0, blank=True)
-    imagen_url = models.URLField(max_length=700, default="https://media.istockphoto.com/id/2189194504/es/foto/female-hand-with-manicure-holding-gold-mascara-tube.jpg?s=612x612&w=0&k=20&c=ooDe4HsRHaLyivbtjbKcXxcC14DMVo1neUNC302WOdg=")  # Enlace en lugar de ImageField
+    imagen = models.ImageField(upload_to='products/', default='products/default.png', null=False, blank=False)
     original_price = models.FloatField(default=0.0, blank=True)  # Renombrado a estilo snake_case
     description = models.CharField(max_length=250, blank=False, null=False, default='Descripcion por defecto')
     rating = models.DecimalField(

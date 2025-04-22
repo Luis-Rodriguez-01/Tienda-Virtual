@@ -23,7 +23,7 @@ const AllProducts = () => {
   useEffect(() => {
     const fetchCategories = async () => {
       try {
-        const response = await axios.get('http://127.0.0.1:8000/api/category/list');
+        const response = await axios.get('https://luisyoiselrodriguezcaballero.pythonanywhere.com/api/category/list');
         const categories = response.data.Categories.map((category: { name: string }) => category.name);
         setCategories(["Todos", ...categories]);
       } catch (error) {
@@ -35,7 +35,7 @@ const AllProducts = () => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await axios.get('http://127.0.0.1:8000/api/products/');
+        const response = await axios.get('https://luisyoiselrodriguezcaballero.pythonanywhere.com/api/products/');
         const productsData = response.data;
         setProducts(productsData);
 
@@ -112,9 +112,9 @@ const AllProducts = () => {
       {/* Header */}
       <div className="relative bg-gradient-to-r from-gray-700 to-gray-300 text-white py-12">
         <div className="max-w-7xl mx-auto px-4">
-          <h1 className="text-4xl font-bold mb-4">Servicios de Belleza</h1>
+          <h1 className="text-4xl font-bold mb-4">Tu Tienda de Regalos Favorita</h1>
           <p className="text-lg text-white/90">
-            Descubre nuestros servicios profesionales
+          Decoraciones florales y sorpresas hechas con amor
           </p>
         </div>
       </div>

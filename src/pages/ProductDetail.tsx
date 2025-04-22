@@ -1,6 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { Star, ArrowLeft } from 'lucide-react';
+import { Star, ArrowLeft, Facebook } from 'lucide-react';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { Product } from '../types/product';
@@ -16,7 +16,7 @@ const ProductDetail = () => {
     const loadProduct = async () => {
       try {
         setLoading(true);
-        const response = await axios.get(`http://127.0.0.1:8000/api/products/${id}`);
+        const response = await axios.get(`https://luisyoiselrodriguezcaballero.pythonanywhere.com/api/products/${id}`);
         setProduct(response.data.product);
       } catch (error) {
         console.error("Error loading product:", error);
@@ -71,7 +71,7 @@ const ProductDetail = () => {
             {/* Product Image */}
             <div className="relative">
               <motion.img
-                src={product.imagen_url}
+                src={`https://luisyoiselrodriguezcaballero.pythonanywhere.com${product.imagen}`}
                 alt={product.name}
                 className="w-full h-[500px] object-cover rounded-lg"
                 initial={{ opacity: 0 }}
@@ -119,6 +119,11 @@ const ProductDetail = () => {
                 <p className="text-gray-600">
                   {product.description}
                 </p>
+              </div>
+              {/* Boton de WhatsApp */}
+              <div className="flex space-x-4">
+                          <a href="https://wa.me/message/W4G5KQFX742GA1" target="_blank" rel="noopener noreferrer">
+                            <Facebook className="w-6 h-6 text-green-500 hover:text-green-600 transition-colors" />Hacer pedidos Aquí</a>
               </div>
             </div>
           </div>
