@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { X, Mail, Lock, User, ArrowRight } from 'lucide-react';
+import { X, Mail, Lock, User, ArrowRight, AlertCircle } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 interface AuthModalProps {
@@ -14,16 +14,27 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, mode, onClose, onSwitchMo
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [name, setName] = useState('');
+    const [error, setError] = useState<string | null>(null);
     const { login, register } = useAuth();
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (mode === 'login') {
-            login(email, password);
-        } else {
-            register(name, email, password);
+        setError(null);
+
+        try {
+            if (mode === 'login') {
+                await login(email, password);
+            } else {
+                await register(name, email, password);
+            }
+            onClose();
+            // Reset form
+            setEmail('');
+            setPassword('');
+            setName('');
+        } catch (err) {
+            setError(err instanceof Error ? err.message : 'Ha ocurrido un error');
         }
-        onClose();
     };
 
     const modalVariants = {
@@ -81,7 +92,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, mode, onClose, onSwitchMo
                         <div className="bg-sky-900 text-white p-6">
                             <div className="flex justify-between items-center">
                                 <h2 className="text-2xl font-bold">
-                                    {mode === 'login' ? 'Welcome Back' : 'Create Account'}
+                                    {mode === 'login' ? 'Bienvenido de nuevo' : 'Crear cuenta'}
                                 </h2>
                                 <button
                                     onClick={onClose}
@@ -92,10 +103,18 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, mode, onClose, onSwitchMo
                             </div>
                             <p className="text-sky-200 mt-2">
                                 {mode === 'login'
-                                    ? 'Sign in to access your account'
-                                    : 'Join us and start shopping'}
+                                    ? 'Inicia sesión para acceder a tu cuenta'
+                                    : 'Únete a nosotros y empieza a comprar'}
                             </p>
                         </div>
+
+                        {/* Error Message */}
+                        {error && (
+                            <div className="bg-red-50 text-red-600 p-4 flex items-start gap-2">
+                                <AlertCircle className="w-5 h-5 flex-shrink-0 mt-0.5" />
+                                <p>{error}</p>
+                            </div>
+                        )}
 
                         {/* Form */}
                         <form onSubmit={handleSubmit} className="p-6 space-y-4">
@@ -110,7 +129,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, mode, onClose, onSwitchMo
                                             type="text"
                                             value={name}
                                             onChange={(e) => setName(e.target.value)}
-                                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-gray-900"
+                                            className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
                                             placeholder="John Doe"
                                             required
                                         />
@@ -120,7 +139,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, mode, onClose, onSwitchMo
 
                             <div>
                                 <label className="block text-sm font-medium text-gray-700 mb-1">
-                                    Email 
+                                    Email
                                 </label>
                                 <div className="relative">
                                     <Mail className="w-5 h-5 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2" />
@@ -128,7 +147,7 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, mode, onClose, onSwitchMo
                                         type="email"
                                         value={email}
                                         onChange={(e) => setEmail(e.target.value)}
-                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-gray-900"
+                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
                                         placeholder="you@example.com"
                                         required
                                     />
@@ -145,30 +164,18 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, mode, onClose, onSwitchMo
                                         type="password"
                                         value={password}
                                         onChange={(e) => setPassword(e.target.value)}
-                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500 text-gray-900"
+                                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-sky-500 focus:border-sky-500"
                                         placeholder="••••••••"
                                         required
                                     />
                                 </div>
                             </div>
 
-                            {mode === 'login' && (
-                                <div className="flex items-center justify-between text-sm">
-                                    <label className="flex items-center">
-                                        <input type="checkbox" className="rounded border-gray-300 text-sky-600 focus:ring-sky-500" />
-                                        <span className="ml-2 text-gray-600">Recuerdame</span>
-                                    </label>
-                                    <a href="#" className="text-sky-600 hover:text-sky-700">
-                                        ¿Olvidaste la contraseña?
-                                    </a>
-                                </div>
-                            )}
-
                             <button
                                 type="submit"
                                 className="w-full bg-sky-600 text-white py-2 px-4 rounded-lg hover:bg-sky-700 transition-colors flex items-center justify-center gap-2"
                             >
-                                <span>{mode === 'login' ? 'Sign In' : 'Create Account'}</span>
+                                <span>{mode === 'login' ? 'Iniciar Sesión' : 'Crear Cuenta'}</span>
                                 <ArrowRight className="w-4 h-4" />
                             </button>
                         </form>
@@ -187,12 +194,12 @@ const AuthModal: React.FC<AuthModalProps> = ({ isOpen, mode, onClose, onSwitchMo
                                 </p>
                             ) : (
                                 <p>
-                                        ¿Ya tienes una cuenta?{' '}
+                                    ¿Ya tienes una cuenta?{' '}
                                     <button
                                         onClick={() => onSwitchMode('login')}
                                         className="text-sky-600 hover:text-sky-700 font-medium"
                                     >
-                                            Inicia sesión
+                                        Inicia sesión
                                     </button>
                                 </p>
                             )}
